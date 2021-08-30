@@ -1,4 +1,4 @@
 #!/bin/bash
-# Must run with a local edgeware chain available
+# Must run with a local coinnet chain available
 
-curl -H "Content-Type: application/json" -d '{"id":"1", "jsonrpc":"2.0", "method": "state_getMetadata", "params":[]}' http://localhost:9933 > edgeware.json
+curl -H "Content-Type: application/json" -d '{"id":"1", "jsonrpc":"2.0", "method": "state_getMetadata", "params":[]}' http://localhost:9933 > coinnet.json
