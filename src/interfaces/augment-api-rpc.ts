@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import type { Metadata } from '@polkadot/metadata';
-import type { Bytes, HashMap, Json, Null, Option, StorageKey, Text, U256, U64, U8aFixed, Vec, bool, u32, u64 } from '@polkadot/types';
+import type { Bytes, HashMap, Json, Null, Option, StorageKey, Text, U256, U64, Vec, bool, u32, u64 } from '@polkadot/types';
 import type { AnyNumber, Codec, IExtrinsic, Observable } from '@polkadot/types/types';
 import type { ExtrinsicOrHash, ExtrinsicStatus } from '@polkadot/types/interfaces/author';
 import type { EpochAuthorship } from '@polkadot/types/interfaces/babe';
@@ -548,12 +548,6 @@ declare module '@polkadot/rpc-core/types.jsonrpc' {
        * Returns sha3 of the given data
        **/
       sha3: AugmentedRpc<(data: Bytes | string | Uint8Array) => Observable<H256>>;
-    };
-    webb: {
-      /**
-       * Query for the tree leaves
-       **/
-      treeLeaves: AugmentedRpc<(tree_id: u32 | AnyNumber | Uint8Array, from: u32 | AnyNumber | Uint8Array, to: u32 | AnyNumber | Uint8Array, at?: Hash | string | Uint8Array) => Observable<Vec<U8aFixed>>>;
     };
   }
 }

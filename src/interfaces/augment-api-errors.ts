@@ -43,6 +43,10 @@ declare module '@polkadot/api/types/errors' {
        **/
       NoProvider: AugmentedError<ApiType>;
       /**
+       * A mint operation lead to an overflow.
+       **/
+      Overflow: AugmentedError<ApiType>;
+      /**
        * No approval exists that would allow the transfer.
        **/
       Unapproved: AugmentedError<ApiType>;
@@ -93,6 +97,24 @@ declare module '@polkadot/api/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
+    babe: {
+      /**
+       * A given equivocation report is valid but already previously reported.
+       **/
+      DuplicateOffenceReport: AugmentedError<ApiType>;
+      /**
+       * An equivocation proof provided as part of an equivocation report is invalid.
+       **/
+      InvalidEquivocationProof: AugmentedError<ApiType>;
+      /**
+       * A key ownership proof provided as part of an equivocation report is invalid.
+       **/
+      InvalidKeyOwnershipProof: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
     balances: {
       /**
        * Beneficiary account must pre-exist
@@ -118,6 +140,10 @@ declare module '@polkadot/api/types/errors' {
        * Account liquidity restrictions prevent withdrawal
        **/
       LiquidityRestrictions: AugmentedError<ApiType>;
+      /**
+       * Got an overflow after adding
+       **/
+      Overflow: AugmentedError<ApiType>;
       /**
        * Vesting balance too high to send value
        **/
@@ -198,10 +224,6 @@ declare module '@polkadot/api/types/errors' {
        * Contract trapped during execution.
        **/
       ContractTrapped: AugmentedError<ApiType>;
-      /**
-       * The debug message specified to `seal_debug_message` does contain invalid UTF-8.
-       **/
-      DebugMessageInvalidUTF8: AugmentedError<ApiType>;
       /**
        * Input passed to a contract API function failed to decode as expected type.
        **/
@@ -301,12 +323,6 @@ declare module '@polkadot/api/types/errors' {
        **/
       StorageExhausted: AugmentedError<ApiType>;
       /**
-       * A contract self destructed in its constructor.
-       * 
-       * This can be triggered by a call to `seal_terminate` or `seal_restore_to`.
-       **/
-      TerminatedInConstructor: AugmentedError<ApiType>;
-      /**
        * The amount of topics passed to `seal_deposit_events` exceeds the limit.
        **/
       TooManyTopics: AugmentedError<ApiType>;
@@ -366,20 +382,6 @@ declare module '@polkadot/api/types/errors' {
        * The given weight bound for the proposal was too low.
        **/
       WrongProposalWeight: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    currencies: {
-      /**
-       * Unable to convert the Amount type into Balance.
-       **/
-      AmountIntoBalanceFailed: AugmentedError<ApiType>;
-      /**
-       * Balance is too low.
-       **/
-      BalanceTooLow: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -479,6 +481,10 @@ declare module '@polkadot/api/types/errors' {
        **/
       NotVoter: AugmentedError<ApiType>;
       /**
+       * An unexpected integer overflow occurred.
+       **/
+      Overflow: AugmentedError<ApiType>;
+      /**
        * Invalid preimage
        **/
       PreimageInvalid: AugmentedError<ApiType>;
@@ -507,6 +513,10 @@ declare module '@polkadot/api/types/errors' {
        **/
       TooManyProposals: AugmentedError<ApiType>;
       /**
+       * An unexpected integer underflow occurred.
+       **/
+      Underflow: AugmentedError<ApiType>;
+      /**
        * Value too low
        **/
       ValueLow: AugmentedError<ApiType>;
@@ -526,10 +536,6 @@ declare module '@polkadot/api/types/errors' {
     };
     electionProviderMultiPhase: {
       /**
-       * OCW submitted solution for wrong round
-       **/
-      OcwCallWrongEra: AugmentedError<ApiType>;
-      /**
        * Submission was too early.
        **/
       PreDispatchEarlySubmission: AugmentedError<ApiType>;
@@ -546,31 +552,75 @@ declare module '@polkadot/api/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
-    evm: {
+    elections: {
       /**
-       * Not enough balance to perform action
+       * Duplicated candidate submission.
        **/
-      BalanceLow: AugmentedError<ApiType>;
+      DuplicatedCandidate: AugmentedError<ApiType>;
       /**
-       * Calculating total fee overflowed
+       * Candidate does not have enough funds.
        **/
-      FeeOverflow: AugmentedError<ApiType>;
+      InsufficientCandidateFunds: AugmentedError<ApiType>;
       /**
-       * Gas price is too low.
+       * The renouncing origin presented a wrong `Renouncing` parameter.
        **/
-      GasPriceTooLow: AugmentedError<ApiType>;
+      InvalidRenouncing: AugmentedError<ApiType>;
       /**
-       * Nonce is invalid
+       * Prediction regarding replacement after member removal is wrong.
        **/
-      InvalidNonce: AugmentedError<ApiType>;
+      InvalidReplacement: AugmentedError<ApiType>;
       /**
-       * Calculating total payment overflowed
+       * The provided count of number of votes is incorrect.
        **/
-      PaymentOverflow: AugmentedError<ApiType>;
+      InvalidVoteCount: AugmentedError<ApiType>;
       /**
-       * Withdraw fee failed
+       * The provided count of number of candidates is incorrect.
        **/
-      WithdrawFailed: AugmentedError<ApiType>;
+      InvalidWitnessData: AugmentedError<ApiType>;
+      /**
+       * Cannot vote with stake less than minimum balance.
+       **/
+      LowBalance: AugmentedError<ApiType>;
+      /**
+       * Cannot vote more than maximum allowed.
+       **/
+      MaximumVotesExceeded: AugmentedError<ApiType>;
+      /**
+       * Member cannot re-submit candidacy.
+       **/
+      MemberSubmit: AugmentedError<ApiType>;
+      /**
+       * Must be a voter.
+       **/
+      MustBeVoter: AugmentedError<ApiType>;
+      /**
+       * Not a member.
+       **/
+      NotMember: AugmentedError<ApiType>;
+      /**
+       * Must vote for at least one candidate.
+       **/
+      NoVotes: AugmentedError<ApiType>;
+      /**
+       * Cannot report self.
+       **/
+      ReportSelf: AugmentedError<ApiType>;
+      /**
+       * Runner cannot re-submit candidacy.
+       **/
+      RunnerUpSubmit: AugmentedError<ApiType>;
+      /**
+       * Cannot vote more than candidates.
+       **/
+      TooManyVotes: AugmentedError<ApiType>;
+      /**
+       * Voter can not pay voting bond.
+       **/
+      UnableToPayBond: AugmentedError<ApiType>;
+      /**
+       * Cannot vote when no candidates or members exist.
+       **/
+      UnableToVote: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -722,93 +772,39 @@ declare module '@polkadot/api/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
-    merkle: {
+    lottery: {
       /**
-       * Nullifier is already used
+       * A lottery has already ended.
        **/
-      AlreadyUsedNullifier: AugmentedError<ApiType>;
+      AlreadyEnded: AugmentedError<ApiType>;
       /**
-       * Tree is full
+       * You are already participating in the lottery with this call.
        **/
-      ExceedsMaxLeaves: AugmentedError<ApiType>;
+      AlreadyParticipating: AugmentedError<ApiType>;
       /**
-       * Invalid membership proof
+       * Failed to encode calls
        **/
-      InvalidMembershipProof: AugmentedError<ApiType>;
+      EncodingFailed: AugmentedError<ApiType>;
       /**
-       * Invalid merkle root hash
+       * A lottery is already in progress.
        **/
-      InvalidMerkleRoot: AugmentedError<ApiType>;
+      InProgress: AugmentedError<ApiType>;
       /**
-       * Invalid merkle path length
+       * The call is not valid for an open lottery.
        **/
-      InvalidPathLength: AugmentedError<ApiType>;
+      InvalidCall: AugmentedError<ApiType>;
       /**
-       * Invalid commitments specified for the zk proof
+       * A lottery has not been configured.
        **/
-      InvalidPrivateInputs: AugmentedError<ApiType>;
+      NotConfigured: AugmentedError<ApiType>;
       /**
-       * Invalid depth of the tree specified
+       * An overflow has occurred.
        **/
-      InvalidTreeDepth: AugmentedError<ApiType>;
+      Overflow: AugmentedError<ApiType>;
       /**
-       * Invalid zero-knowladge data
+       * Too many calls for a single lottery.
        **/
-      InvalidZkProof: AugmentedError<ApiType>;
-      /**
-       * Manager not found for specific tree
-       **/
-      ManagerDoesntExist: AugmentedError<ApiType>;
-      /**
-       * Manager is required for specific action
-       **/
-      ManagerIsRequired: AugmentedError<ApiType>;
-      /**
-       * Value was None
-       **/
-      NoneValue: AugmentedError<ApiType>;
-      /**
-       * Tree doesnt exist
-       **/
-      TreeDoesntExist: AugmentedError<ApiType>;
-      /**
-       * Failed to verify zero-knowladge proof
-       **/
-      ZkVericationFailed: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    mixer: {
-      /**
-       * Mixer is already initialized
-       **/
-      AlreadyInitialised: AugmentedError<ApiType>;
-      /**
-       * User doesn't have enough balance for the deposit
-       **/
-      InsufficientBalance: AugmentedError<ApiType>;
-      /**
-       * Mixer is stopped
-       **/
-      MixerStopped: AugmentedError<ApiType>;
-      /**
-       * Mixer not found for specified id
-       **/
-      NoMixerForId: AugmentedError<ApiType>;
-      /**
-       * Value was None
-       **/
-      NoneValue: AugmentedError<ApiType>;
-      /**
-       * Mixer is not initialized
-       **/
-      NotInitialised: AugmentedError<ApiType>;
-      /**
-       * Caller doesn't have permission to make a call
-       **/
-      UnauthorizedCall: AugmentedError<ApiType>;
+      TooManyCalls: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -871,150 +867,6 @@ declare module '@polkadot/api/types/errors' {
        * A different timepoint was given to the multisig operation that is underway.
        **/
       WrongTimepoint: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    nft: {
-      /**
-       * Can not destroy class
-       * Total issuance is not 0
-       **/
-      CannotDestroyClass: AugmentedError<ApiType>;
-      /**
-       * ClassId not found
-       **/
-      ClassIdNotFound: AugmentedError<ApiType>;
-      /**
-       * Quantity is invalid. need >= 1
-       **/
-      InvalidQuantity: AugmentedError<ApiType>;
-      /**
-       * Property of class don't support burn
-       **/
-      NonBurnable: AugmentedError<ApiType>;
-      /**
-       * Property of class don't support transfer
-       **/
-      NonTransferable: AugmentedError<ApiType>;
-      /**
-       * The operator is not the owner of the token and has no permission
-       **/
-      NoPermission: AugmentedError<ApiType>;
-      /**
-       * TokenId not found
-       **/
-      TokenIdNotFound: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    nonFungibleTokenModule: {
-      /**
-       * Can not destroy class
-       * Total issuance is not 0
-       **/
-      CannotDestroyClass: AugmentedError<ApiType>;
-      /**
-       * Class not found
-       **/
-      ClassNotFound: AugmentedError<ApiType>;
-      /**
-       * No available class ID
-       **/
-      NoAvailableClassId: AugmentedError<ApiType>;
-      /**
-       * No available token ID
-       **/
-      NoAvailableTokenId: AugmentedError<ApiType>;
-      /**
-       * The operator is not the owner of the token and has no permission
-       **/
-      NoPermission: AugmentedError<ApiType>;
-      /**
-       * Arithmetic calculation overflow
-       **/
-      NumOverflow: AugmentedError<ApiType>;
-      /**
-       * Token(ClassId, TokenId) not found
-       **/
-      TokenNotFound: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    phragmenElection: {
-      /**
-       * Duplicated candidate submission.
-       **/
-      DuplicatedCandidate: AugmentedError<ApiType>;
-      /**
-       * Candidate does not have enough funds.
-       **/
-      InsufficientCandidateFunds: AugmentedError<ApiType>;
-      /**
-       * The renouncing origin presented a wrong `Renouncing` parameter.
-       **/
-      InvalidRenouncing: AugmentedError<ApiType>;
-      /**
-       * Prediction regarding replacement after member removal is wrong.
-       **/
-      InvalidReplacement: AugmentedError<ApiType>;
-      /**
-       * The provided count of number of votes is incorrect.
-       **/
-      InvalidVoteCount: AugmentedError<ApiType>;
-      /**
-       * The provided count of number of candidates is incorrect.
-       **/
-      InvalidWitnessData: AugmentedError<ApiType>;
-      /**
-       * Cannot vote with stake less than minimum balance.
-       **/
-      LowBalance: AugmentedError<ApiType>;
-      /**
-       * Cannot vote more than maximum allowed.
-       **/
-      MaximumVotesExceeded: AugmentedError<ApiType>;
-      /**
-       * Member cannot re-submit candidacy.
-       **/
-      MemberSubmit: AugmentedError<ApiType>;
-      /**
-       * Must be a voter.
-       **/
-      MustBeVoter: AugmentedError<ApiType>;
-      /**
-       * Not a member.
-       **/
-      NotMember: AugmentedError<ApiType>;
-      /**
-       * Must vote for at least one candidate.
-       **/
-      NoVotes: AugmentedError<ApiType>;
-      /**
-       * Cannot report self.
-       **/
-      ReportSelf: AugmentedError<ApiType>;
-      /**
-       * Runner cannot re-submit candidacy.
-       **/
-      RunnerUpSubmit: AugmentedError<ApiType>;
-      /**
-       * Cannot vote more than candidates.
-       **/
-      TooManyVotes: AugmentedError<ApiType>;
-      /**
-       * Voter can not pay voting bond.
-       **/
-      UnableToPayBond: AugmentedError<ApiType>;
-      /**
-       * Cannot vote when no candidates or members exist.
-       **/
-      UnableToVote: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
@@ -1111,6 +963,10 @@ declare module '@polkadot/api/types/errors' {
        * A recovery process has not started for this rescuer
        **/
       NotStarted: AugmentedError<ApiType>;
+      /**
+       * There was an overflow in a calculation
+       **/
+      Overflow: AugmentedError<ApiType>;
       /**
        * There are still active recovery attempts that need to be closed
        **/
@@ -1302,6 +1158,80 @@ declare module '@polkadot/api/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
+    technicalCommittee: {
+      /**
+       * Members are already initialized!
+       **/
+      AlreadyInitialized: AugmentedError<ApiType>;
+      /**
+       * Duplicate proposals not allowed
+       **/
+      DuplicateProposal: AugmentedError<ApiType>;
+      /**
+       * Duplicate vote ignored
+       **/
+      DuplicateVote: AugmentedError<ApiType>;
+      /**
+       * Account is not a member
+       **/
+      NotMember: AugmentedError<ApiType>;
+      /**
+       * Proposal must exist
+       **/
+      ProposalMissing: AugmentedError<ApiType>;
+      /**
+       * The close call was made too early, before the end of the voting.
+       **/
+      TooEarly: AugmentedError<ApiType>;
+      /**
+       * There can only be a maximum of `MaxProposals` active proposals.
+       **/
+      TooManyProposals: AugmentedError<ApiType>;
+      /**
+       * Mismatched index
+       **/
+      WrongIndex: AugmentedError<ApiType>;
+      /**
+       * The given length bound for the proposal was too low.
+       **/
+      WrongProposalLength: AugmentedError<ApiType>;
+      /**
+       * The given weight bound for the proposal was too low.
+       **/
+      WrongProposalWeight: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    technicalMembership: {
+      /**
+       * Already a member.
+       **/
+      AlreadyMember: AugmentedError<ApiType>;
+      /**
+       * Not a member.
+       **/
+      NotMember: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    templateModule: {
+      /**
+       * Error names should be descriptive.
+       **/
+      NoneValue: AugmentedError<ApiType>;
+      /**
+       * Errors should have helpful documentation associated with them.
+       **/
+      StorageOverflow: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
     tips: {
       /**
        * The tip was already found/started.
@@ -1327,103 +1257,6 @@ declare module '@polkadot/api/types/errors' {
        * The tip hash is unknown.
        **/
       UnknownTip: AugmentedError<ApiType>;
-      /**
-       * Generic error
-       **/
-      [key: string]: AugmentedError<ApiType>;
-    };
-    tokens: {
-      /**
-       * Cannot convert Amount into Balance type
-       **/
-      AmountIntoBalanceFailed: AugmentedError<ApiType>;
-      /**
-       * Invalid metadata given.
-       **/
-      BadMetadata: AugmentedError<ApiType>;
-      /**
-       * Invalid witness data given.
-       **/
-      BadWitness: AugmentedError<ApiType>;
-      /**
-       * Account balance must be greater than or equal to the transfer
-       * amount.
-       **/
-      BalanceLow: AugmentedError<ApiType>;
-      /**
-       * This operation will cause balance to overflow
-       **/
-      BalanceOverflow: AugmentedError<ApiType>;
-      /**
-       * Balance should be non-zero.
-       **/
-      BalanceZero: AugmentedError<ApiType>;
-      /**
-       * Amount to be transferred is below minimum existential deposit
-       **/
-      BelowMinimum: AugmentedError<ApiType>;
-      /**
-       * The origin account is frozen.
-       **/
-      Frozen: AugmentedError<ApiType>;
-      /**
-       * The currency ID is already taken.
-       **/
-      InUse: AugmentedError<ApiType>;
-      /**
-       * Invalid amount,
-       **/
-      InvalidAmount: AugmentedError<ApiType>;
-      /**
-       * Failed because liquidity restrictions due to locking
-       **/
-      LiquidityRestrictions: AugmentedError<ApiType>;
-      /**
-       * Minimum balance should be non-zero.
-       **/
-      MinBalanceZero: AugmentedError<ApiType>;
-      /**
-       * The signing account has no permission to do the operation.
-       **/
-      NoPermission: AugmentedError<ApiType>;
-      /**
-       * No provider reference exists to allow a non-zero balance of a
-       * non-self-sufficient currency.
-       **/
-      NoProvider: AugmentedError<ApiType>;
-      /**
-       * A mint operation lead to an overflow.
-       **/
-      Overflow: AugmentedError<ApiType>;
-      /**
-       * Account still has active reserved
-       **/
-      StillHasActiveReserved: AugmentedError<ApiType>;
-      /**
-       * The token doesn't exist
-       **/
-      TokenDoesntExist: AugmentedError<ApiType>;
-      /**
-       * The token is frozen
-       **/
-      TokenIsFrozen: AugmentedError<ApiType>;
-      /**
-       * This operation will cause total issuance to overflow
-       **/
-      TotalIssuanceOverflow: AugmentedError<ApiType>;
-      /**
-       * No approval exists that would allow the transfer.
-       **/
-      Unapproved: AugmentedError<ApiType>;
-      /**
-       * The given currency ID is unknown.
-       **/
-      Unknown: AugmentedError<ApiType>;
-      /**
-       * The source account would not survive the transfer and it needs to
-       * stay alive.
-       **/
-      WouldDie: AugmentedError<ApiType>;
       /**
        * Generic error
        **/
